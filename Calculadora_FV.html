@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Personalizada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculadora Personalizada</h2>
+        <form id="calculadoraForm">
+            <label for="corrienteMedia">Corriente Media:</label>
+            <input type="number" id="corrienteMedia" step="0.01" required><br><br>
+            <label for="voltaje">Voltaje (L-L):</label>
+            <input type="number" id="voltaje" step="0.01" required><br><br>
+            <label for="tiempo">Tiempo:</label>
+            <input type="number" id="tiempo" step="0.01" required><br><br>
+            <label for="kh">KH:</label>
+            <input type="number" id="kh" step="0.01" required><br><br>
+            <button type="button" onclick="calcular()">Calcular</button><br><br>
+        </form>
+        <div id="resultados" style="display: none;">
+            <p>Potencia de Carga: <span id="potenciaCarga"></span></p>
+            <p>Potencia de Tiempo: <span id="potenciaTiempo"></span></p>
+            <p>F.V: <span id="fv"></span></p>
+            <button onclick="resetForm()">Ingresar Nuevos Valores</button>
+        </div>
+    </div>
+    <script>
+        function calcular() {
+            var corrienteMedia = parseFloat(document.getElementById("corrienteMedia").value);
+            var voltaje = parseFloat(document.getElementById("voltaje").value);
+            var tiempo = parseFloat(document.getElementById("tiempo").value);
+            var kh = parseFloat(document.getElementById("kh").value);
+
+            var potenciaCarga = (corrienteMedia * voltaje) / 1000;
+            var potenciaTiempo = (kh * 3.6) / tiempo;
+            var fv = potenciaTiempo / potenciaCarga;
+
+            document.getElementById("potenciaCarga").textContent = potenciaCarga.toFixed(2);
+            document.getElementById("potenciaTiempo").textContent = potenciaTiempo.toFixed(2);
+            document.getElementById("fv").textContent = fv.toFixed(2);
+
+            document.getElementById("resultados").style.display = "block";
+        }
+
+        function resetForm() {
+            document.getElementById("calculadoraForm").reset();
+            document.getElementById("resultados").style.display = "none";
+        }
+    </script>
+</body>
+</html>
